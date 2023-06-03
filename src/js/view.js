@@ -23,6 +23,7 @@ export default (state) => {
                 .then(fid => {
                     const fids = state.formRss.fids
                     const hasStateFid = fids.includes(fid) ? true : false;
+                    console.log(`hasStateFid - ${hasStateFid}`);
 
                     if (hasStateFid) {
                         return;
