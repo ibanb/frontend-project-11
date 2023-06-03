@@ -1,5 +1,5 @@
 import onChange from 'on-change';
-import * as yup from 'yup';
+import { object, string, number, date} from 'yup';
 
 export default (state) => {
     return onChange(state, () => {
@@ -10,10 +10,14 @@ export default (state) => {
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const formData = new FormData(form);
             const value = formData.get('url');
-            const schema = yup.string().url();
+            const forCheck = {value};
+            const schema = object({
+                value: string().url(),
+            });
+            
             schema.validate(value)
                 .then(fid => {
                     const fids = state.formRss.fids
