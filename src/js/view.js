@@ -25,12 +25,12 @@ export default (state) => {
                     const hasStateFid = fids.includes(fid) ? true : false;
                     console.log(`hasStateFid - ${hasStateFid}`);
 
-                    if (hasStateFid) {
-                        return;
+                    if (!hasStateFid) {
+                        console.log(`url = ${fid}`);
+                        
+                        state.formRss.fids.push(fid);
+                        console.log(`fids = ${fids}`);
                     }
-
-                    state.formRss.fids.push(fid)
-
                 })
                 .catch(err => {
                     console.log('ERROR');
