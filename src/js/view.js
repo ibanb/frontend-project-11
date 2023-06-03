@@ -4,6 +4,7 @@ import { object, string, number, date} from 'yup';
 export default (state) => {
     return onChange(state, () => {
         console.log('render');
+        console.log(state.formRss.fids)
 
         const form = window.document.querySelector('form');
         const inputRSS = window.document.querySelector('[name="url"]');
