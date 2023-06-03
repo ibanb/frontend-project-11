@@ -19,7 +19,7 @@ export default (state) => {
                 value: string().url(),
             });
             
-            schema.validate(value)
+            schema.validate(forCheck)
                 .then(fid => {
                     const fids = state.formRss.fids
                     const hasStateFid = fids.includes(fid) ? true : false;
