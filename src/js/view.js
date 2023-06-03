@@ -1,5 +1,5 @@
 import onChange from 'on-change';
-import yup from 'yup';
+import * as yup from 'yup';
 
 export default (state) => {
     return onChange(state, () => {
