@@ -1,6 +1,7 @@
 const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 // import I18nPlugin from "i18n-webpack-plugin";
+// something wrong
 
 
 module.exports = {
