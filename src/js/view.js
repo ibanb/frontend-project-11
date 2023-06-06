@@ -10,6 +10,8 @@ export default (state) => {
         const inputRSS = window.document.querySelector('[name="url"]');
         const formValid = state.formRss.valid;
 
+        console.log(inputRSS);
+
         if (!formValid) {
             inputRSS.classList.add('is-invalid');
             inputRSS.value = '';
@@ -38,13 +40,14 @@ export default (state) => {
                     const hasStateFid = fids.includes(fid) ? true : false;
                     console.log(`hasStateFid - ${hasStateFid}`);
 
-                    if (!hasStateFid) {
-                        console.log(`url = ${fid}`);
-                        
-                        state.formRss.fids.push(fid);
-                        state.formRss.valid = true;
-                        console.log(`fids = ${fids}`);
+                    if (hasStateFid) {
+                        throw new Error('ERROR on THROW');
                     }
+
+                    console.log(`url = ${fid}`);    
+                    state.formRss.fids.push(fid);
+                    state.formRss.valid = true;
+                    console.log(`fids = ${fids}`);
                 })
                 .catch(err => {
                     console.log('ERROR');
