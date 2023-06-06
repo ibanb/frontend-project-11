@@ -21,7 +21,7 @@ const watchedState = onChange(state, () => {
 
     const form = window.document.querySelector('form');
     const inputRSS = window.document.querySelector('[name="url"]');
-    const formValid = state.formRss.valid;
+    const formValid = watchedState.formRss.valid;
 
     console.log(inputRSS);
 
@@ -48,27 +48,26 @@ const watchedState = onChange(state, () => {
         schema.validate(forCheck)
             .then(result => {
                 const {value: fid} = result;
-                console.log(fid);
-                const fids = watchedState.formRss.fids
+                const rssFormState = _.cloneDeep(watchedState.formRss);
                 const hasStateFid = fids.includes(fid) ? true : false;
-                console.log(`hasStateFid - ${hasStateFid}`);
 
                 if (hasStateFid) {
-                    throw new Error('ERROR on THROW');
+                    throw new Error('hasStateFid');
                 }
 
-                console.log(`url = ${fid}`);    
-                watchedState.formRss.fids.push(fid);
-                watchedState.formRss.valid = true;
-                console.log(`fids = ${fids}`);
+                // create new state prop
+                rssFormState.fids.push(fid);
+                rssFormState.valid = true;
+                watchedState.formRss = rssFormState;
+                
             })
             .catch(err => {
-                console.log('ERROR');
+                console.log(err.message);
                 watchedState.formRss.valid = false;
             });
 
     })
-});
+})
 
 // init callback
 watchedState.formRss.valid = true;
