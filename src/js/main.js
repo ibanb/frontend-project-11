@@ -17,10 +17,6 @@ const state = {
 };
 
 const watchedState = onChange(state, () => {
-    console.log('==== RENDER ====');
-    console.log(`valid - ${watchedState.formRss.valid}`);
-    console.log(`fids - ${watchedState.formRss.fids}`);
-    console.log(`errors - ${watchedState.formRss.errors}`);
 
     const form = window.document.querySelector('form');
     const inputRSS = window.document.querySelector('[name="url"]');
@@ -38,6 +34,10 @@ const watchedState = onChange(state, () => {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        console.log('==== RENDER ====');
+        console.log(`valid - ${watchedState.formRss.valid}`);
+        console.log(`fids - ${watchedState.formRss.fids}`);
+        console.log(`errors - ${watchedState.formRss.errors}`);
 
         const formData = new FormData(form);
         const value = formData.get('url');
@@ -73,6 +73,6 @@ const watchedState = onChange(state, () => {
     })
 })
 
-// init callback
+// init callback FIRST RENDER
 watchedState.formRss.valid = true;
 
