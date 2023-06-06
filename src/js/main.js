@@ -73,5 +73,5 @@ const watchedState = onChange(state, () => {
 })
 
 // init callback FIRST RENDER
-// watchedState.formRss.valid = true;
+watchedState.formRss.valid = true;
 
