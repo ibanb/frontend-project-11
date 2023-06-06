@@ -50,7 +50,7 @@ const watchedState = onChange(state, () => {
             .then(result => {
                 const {value: fid} = result;
                 const rssFormState = _.cloneDeep(watchedState.formRss);
-                const hasStateFid = fids.includes(fid) ? true : false;
+                const hasStateFid = rssFormState.fids.includes(fid) ? true : false;
 
                 if (hasStateFid) {
                     throw new Error('hasStateFid');
