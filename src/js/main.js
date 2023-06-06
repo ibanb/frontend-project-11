@@ -74,5 +74,5 @@ form.addEventListener('submit', (e) => {
 
 })
 
-watchedState.formRss.valid = true;
+// watchedState.formRss.valid = true;
 
