@@ -20,18 +20,19 @@ export default (state) => {
             });
             
             schema.validate(forCheck)
-                .then(fid => {
+                .then(result => {
+                    const {value: fid} = result;
                     console.log(fid);
-                    // const fids = state.formRss.fids
-                    // const hasStateFid = fids.includes(fid) ? true : false;
-                    // console.log(`hasStateFid - ${hasStateFid}`);
+                    const fids = state.formRss.fids
+                    const hasStateFid = fids.includes(fid) ? true : false;
+                    console.log(`hasStateFid - ${hasStateFid}`);
 
-                    // if (!hasStateFid) {
-                    //     console.log(`url = ${fid}`);
+                    if (!hasStateFid) {
+                        console.log(`url = ${fid}`);
                         
-                    //     state.formRss.fids.push(fid);
-                    //     console.log(`fids = ${fids}`);
-                    // }
+                        state.formRss.fids.push(fid);
+                        console.log(`fids = ${fids}`);
+                    }
                 })
                 .catch(err => {
                     console.log('ERROR');
