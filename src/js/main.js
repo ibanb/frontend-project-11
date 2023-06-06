@@ -24,21 +24,20 @@ const watchedState = onChange(state, () => {
     console.log(`errors - ${watchedState.formRss.errors}`);
 
     const form = window.document.querySelector('form');
-    const inputRSS = window.document.querySelector('[name="url"]');
-    const formValid = watchedState.formRss.valid;
-
-    if (!formValid) {
-        inputRSS.classList.add('is-invalid');
-        form.reset();
-    }
-
-    if (formValid) {
-        inputRSS.classList.remove('is-invalid');
-        form.reset();
-    }
-
+    
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        const inputRSS = window.document.querySelector('[name="url"]');
+
+        if (!watchedState.formRss.valid) {
+            inputRSS.classList.add('is-invalid');
+        }
+
+        if (watchedState.formRss.valid) {
+            inputRSS.classList.remove('is-invalid');
+            form.reset();
+        }
         
         const formData = new FormData(form);
         const value = formData.get('url');
