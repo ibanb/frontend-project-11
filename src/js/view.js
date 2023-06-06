@@ -8,6 +8,17 @@ export default (state) => {
 
         const form = window.document.querySelector('form');
         const inputRSS = window.document.querySelector('[name="url"]');
+        const formValid = state.formRss.valid;
+
+        if (!formValid) {
+            inputRSS.classList.add('is-invalid');
+            inputRSS.value = '';
+        }
+
+        if (formValid) {
+            inputRSS.classList.remove('is-invalid');
+            inputRSS.value = '';
+        }
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -31,11 +42,13 @@ export default (state) => {
                         console.log(`url = ${fid}`);
                         
                         state.formRss.fids.push(fid);
+                        state.formRss.valid = true;
                         console.log(`fids = ${fids}`);
                     }
                 })
                 .catch(err => {
                     console.log('ERROR');
+                    state.formRss.valid = false;
                 });
 
         })
