@@ -1,7 +1,7 @@
 import { object, string, number, date} from 'yup';
 import _ from 'lodash';
 
-export default () => {
+export default (state) => {
     const form = window.document.querySelector('form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
