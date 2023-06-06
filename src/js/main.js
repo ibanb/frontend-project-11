@@ -18,6 +18,11 @@ const state = {
 
 const watchedState = onChange(state, () => {
 
+    console.log('==== RENDER ====');
+    console.log(`valid - ${watchedState.formRss.valid}`);
+    console.log(`fids - ${watchedState.formRss.fids}`);
+    console.log(`errors - ${watchedState.formRss.errors}`);
+
     const form = window.document.querySelector('form');
     const inputRSS = window.document.querySelector('[name="url"]');
     const formValid = watchedState.formRss.valid;
@@ -35,7 +40,6 @@ const watchedState = onChange(state, () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-
         const formData = new FormData(form);
         const value = formData.get('url');
         const forCheck = {value};
@@ -54,17 +58,10 @@ const watchedState = onChange(state, () => {
                 }
 
                 // create new state prop
-
-                
                 rssFormState.fids.push(fid);
+                rssFormState.errors = [];
                 rssFormState.valid = true;
                 watchedState.formRss = rssFormState;
-
-                console.log('==== RENDER ====');
-                console.log(`valid - ${watchedState.formRss.valid}`);
-                console.log(`fids - ${watchedState.formRss.fids}`);
-                console.log(`errors - ${watchedState.formRss.errors}`);
-                
             })
             .catch(err => {
                 const rssFormState = _.cloneDeep(watchedState.formRss);
@@ -72,11 +69,6 @@ const watchedState = onChange(state, () => {
                 rssFormState.errors.push(err.message);
                 rssFormState.valid = false;
                 watchedState.formRss = rssFormState;
-
-                console.log('==== RENDER ====');
-                console.log(`valid - ${watchedState.formRss.valid}`);
-                console.log(`fids - ${watchedState.formRss.fids}`);
-                console.log(`errors - ${watchedState.formRss.errors}`);
             });
 
     })
