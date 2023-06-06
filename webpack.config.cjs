@@ -1,5 +1,8 @@
 const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const I18nPlugin = require("i18n-webpack-plugin");
+const ru = require("./src/locales/ru.js");
+
 
 module.exports = {
   entry: './src/js/main.js',
@@ -46,5 +49,6 @@ module.exports = {
       'paths': true,
       'caching': true,
     }),
+    new I18nPlugin(),
   ]
 }
