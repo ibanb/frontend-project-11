@@ -8,6 +8,7 @@ export default (state) => {
 
     
     const inputRSS = window.document.querySelector('[name="url"]');
+    const form = window.document.querySelector('form');
 
     if (!state.formRss.valid) {
         inputRSS.classList.add('is-invalid');
