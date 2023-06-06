@@ -13,7 +13,7 @@ const state = onChange({
         fids: [],
         errors: [],
     }
-}, render);
+}, () => {render(state)});
 
 // add events
 setControls(state);
