@@ -16,6 +16,6 @@ const state = onChange({
 }, render);
 
 // add events
-setControls(state);s
+setControls(state);
 
 
