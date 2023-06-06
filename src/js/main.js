@@ -3,6 +3,7 @@ import '../scss/styles.scss';
 import * as bootstrap from 'bootstrap';
 import onChange from 'on-change';
 import { object, string, number, date} from 'yup';
+import _ from 'lodash';
 // import watchedState from './view.js';
 
 
