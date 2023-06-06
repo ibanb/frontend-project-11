@@ -17,23 +17,23 @@ const state = {
 };
 
 const watchedState = onChange(state, () => {
-    console.log('render');
-    console.log(state.formRss.fids)
+    console.log('==== RENDER ====');
+    console.log(`valid - ${watchedState.formRss.valid}`);
+    console.log(`fids - ${watchedState.formRss.fids}`);
+    console.log(`errors - ${watchedState.formRss.errors}`);
 
     const form = window.document.querySelector('form');
     const inputRSS = window.document.querySelector('[name="url"]');
     const formValid = watchedState.formRss.valid;
 
-    console.log(inputRSS);
-
     if (!formValid) {
         inputRSS.classList.add('is-invalid');
-        inputRSS.value = '';
+        form.reset();
     }
 
     if (formValid) {
         inputRSS.classList.remove('is-invalid');
-        inputRSS.value = '';
+        form.reset();
     }
 
     form.addEventListener('submit', (e) => {
@@ -63,8 +63,11 @@ const watchedState = onChange(state, () => {
                 
             })
             .catch(err => {
-                console.log(err.message);
-                watchedState.formRss.valid = false;
+                const rssFormState = _.cloneDeep(watchedState.formRss);
+                rssFormState.errors = [];
+                rssFormState.errors.push(err.message);
+                rssFormState.valid = false;
+                watchedState.formRss = rssFormState;
             });
 
     })
