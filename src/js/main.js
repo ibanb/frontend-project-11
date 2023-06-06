@@ -15,7 +15,7 @@ const state = onChange({
     }
 }, () => {render(state)});
 
-// add events
+// add ALL events
 setControls(state);
 
 
