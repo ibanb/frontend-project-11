@@ -1,8 +1,7 @@
 const path = require('path');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-// import I18nPlugin from "i18n-webpack-plugin";
-// something wrong
-
+// const I18nPlugin = require('i18n-webpack-plugin');
+// import ru from './src/locales.ru.js';
 
 module.exports = {
   entry: './src/js/main.js',
