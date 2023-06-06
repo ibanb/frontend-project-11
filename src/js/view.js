@@ -51,7 +51,7 @@ export default (state) => {
                 })
                 .catch(err => {
                     console.log('ERROR');
-                    state.formRss.valid = false;
+                    watchedState.formRss.valid = false;
                 });
 
         })
