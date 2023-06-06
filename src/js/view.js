@@ -36,7 +36,7 @@ export default (state) => {
                 .then(result => {
                     const {value: fid} = result;
                     console.log(fid);
-                    const fids = state.formRss.fids
+                    const fids = watchedState.formRss.fids
                     const hasStateFid = fids.includes(fid) ? true : false;
                     console.log(`hasStateFid - ${hasStateFid}`);
 
@@ -45,8 +45,8 @@ export default (state) => {
                     }
 
                     console.log(`url = ${fid}`);    
-                    state.formRss.fids.push(fid);
-                    state.formRss.valid = true;
+                    watchedState.formRss.fids.push(fid);
+                    watchedState.formRss.valid = true;
                     console.log(`fids = ${fids}`);
                 })
                 .catch(err => {
