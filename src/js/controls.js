@@ -1,6 +1,6 @@
 import { object, string, number, date, setLocale} from 'yup';
 import _ from 'lodash';
-import axios from 'axios';
+import { getFeedContent } from './helpers.js';
 
 setLocale({
 
@@ -18,8 +18,6 @@ const schema = object({
     value: string().url(),
 });
 
-
-
 export default (state, i18nInstance) => {
 
     window.document.querySelector('.display-3').textContent = i18nInstance.t('name');
@@ -36,28 +34,14 @@ export default (state, i18nInstance) => {
         const value = formData.get('url');
         const forCheck = {value};
         
-        
         schema.validate(forCheck)
             .then(result => {
 
-                // axios.get('https://lorem-rss.hexlet.app/feed?unit=second')
-                //     .then((result) => {
-                //         const parser = new DOMParser();
-                //         const rss = parser.parseFromString(result.data, 'text/html');
-                //         console.log(rss);
-                //     });
-
-
-                const {value: fid} = result;
-                const rssFormState = _.cloneDeep(state.formRss);
-                const hasStateFid = rssFormState.fids.includes(fid) ? true : false;
+                const {value: feed} = result;
+                // function check includes bu value
+                const hasStateFid = state.formRss.fids.filter(item => item.name === feed).length === 0 ? true : false;
 
                 if (!hasStateFid) {
-                    rssFormState.fids.push(fid);
-                    rssFormState.errors = [];
-                    rssFormState.valid = true;
-
-                    state.formRss = rssFormState;
                     return fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=https://lorem-rss.hexlet.app/feed?unit=second`);
                 } else {
                     throw new Error('hasStateFid');
@@ -68,10 +52,26 @@ export default (state, i18nInstance) => {
                 throw new Error('network_fail')
             })
             .then(data => {
-            
+
+                // preparing data to update state
+                const url = feed;
+                const id = formRssCopy.genID + 1;
                 const parser = new window.DOMParser();
-                const rss = parser.parseFromString(data.contents, 'text/html');
-                console.log(rss);
+                const html = parser.parseFromString(data.contents, 'text/html');
+                const formRssCopy = _.cloneDeep(state.formRss);
+
+                // in future make CHECKING function for RIGTH getFeedsContent
+                const {title, descr, posts} = getFeedContent(html, id);
+                
+                // create copy prop for state update
+                formRssCopy.errors = [];
+                formRssCopy.valid = true;
+                formRssCopy.genID += 1;
+                formRssCopy.fids.push({id, title, url, descr});
+                formRssCopy.posts = [...formRssCopy.posts, ...posts];
+
+                // STATE UPDATE
+                state.formRss = formRssCopy;
                     
             })
             .catch(err => {

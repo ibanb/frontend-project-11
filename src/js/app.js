@@ -29,6 +29,7 @@ export default () => {
                 posts: [],
                 fids: [],
                 errors: [],
+                genID: 1,
             }
         }, () => {render(state, i18nInstance)});
 

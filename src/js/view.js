@@ -6,6 +6,7 @@ export default (state, i18nInstance) => {
     console.log(`valid - ${state.formRss.valid}`);
     console.log(`fids - ${state.formRss.fids}`);
     console.log(`errors - ${state.formRss.errors}`);
+    console.log(`posts - ${state.formRss.posts}`);
 
     // get active elements
     const inputRSS = window.document.querySelector('[name="url"]');
