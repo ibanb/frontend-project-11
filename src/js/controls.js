@@ -70,7 +70,7 @@ export default (state, i18nInstance) => {
             .then(data => {
             
                 const parser = new window.DOMParser();
-                const rss = parser.parseFromString(result.data, 'text/html');
+                const rss = parser.parseFromString(data.contents, 'text/html');
                 console.log(rss);
                     
             })
