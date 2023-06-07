@@ -2,6 +2,8 @@ import { object, string, number, date, setLocale} from 'yup';
 import _ from 'lodash';
 
 setLocale({
+
+    // use constant translation keys for messages without values
     mixed: {
         default: 'hasStateFid',
       },
@@ -47,14 +49,21 @@ export default (state, i18nInstance) => {
 
                     state.formRss = rssFormState;
                 } else {
-                    throw new Error;
+                    throw new Error('hasStateFid');
                 }
             })
             .catch(err => {
-                const messages = err.errors.map((err) => i18nInstance.t(err.key));
+
                 const rssFormState = _.cloneDeep(state.formRss);
-                rssFormState.errors = [...messages];
                 rssFormState.valid = false;
+
+                if (err.message === "hasStateFid") {
+                    rssFormState.errors = [i18nInstance.t(err.message)];
+                } else {
+                    const messages = err.errors.map((err) => i18nInstance.t(err.key));
+                    rssFormState.errors = [...messages];
+                }
+                
                 state.formRss = rssFormState;
             });
 
