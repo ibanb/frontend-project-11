@@ -65,7 +65,7 @@ export default (state, i18nInstance) => {
             })
             .then(response => {
                 if (response.ok) return response.json()
-                throw new Error('Network_fail')
+                throw new Error('network_fail')
             })
             .then(data => {
             
