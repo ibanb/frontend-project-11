@@ -38,41 +38,52 @@ export default (state, i18nInstance) => {
             .then(result => {
 
                 const {value: feed} = result;
+                const feeds = state.formRss.feeds;
                 // function check includes bu value
-                const hasStateFid = state.formRss.fids.filter(item => item.name === feed).length === 0 ? true : false;
-
-                if (!hasStateFid) {
-                    return fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=https://lorem-rss.hexlet.app/feed?unit=second`);
+                if (feeds.length === 0 || !feeds.map(feed => feed.url).includes(feed)) {
+                    return fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${feed}`);
                 } else {
                     throw new Error('hasStateFid');
                 }
+
             })
             .then(response => {
-                if (response.ok) return response.json()
+                if (response.ok) {
+                    return response.json()
+                }
                 throw new Error('network_fail')
             })
             .then(data => {
+                // console.log(data);
 
                 // preparing data to update state
-                const url = feed;
-                const id = formRssCopy.genID + 1;
+                const url = data.status.url;
                 const parser = new window.DOMParser();
                 const html = parser.parseFromString(data.contents, 'text/html');
-                const formRssCopy = _.cloneDeep(state.formRss);
+                console.log(html);
+                console.log('-----');
+                console.log(html.querySelector('rss'));
 
-                // in future make CHECKING function for RIGTH getFeedsContent
-                const {title, descr, posts} = getFeedContent(html, id);
-                
-                // create copy prop for state update
-                formRssCopy.errors = [];
-                formRssCopy.valid = true;
-                formRssCopy.genID += 1;
-                formRssCopy.fids.push({id, title, url, descr});
-                formRssCopy.posts = [...formRssCopy.posts, ...posts];
 
-                // STATE UPDATE
-                state.formRss = formRssCopy;
+                if (!html.querySelector('rss')) {
+                    throw new Error('rss_fail')
+                } else {
+                    const formRssCopy = _.cloneDeep(state.formRss);
+                    const id = formRssCopy.genID + 1;
+                    // in future make CHECKING function for RIGTH getFeedsContent
+                    const {title, descr, posts} = getFeedContent(html, id);
                     
+                    // create copy prop for state update
+                    formRssCopy.errors = [];
+                    formRssCopy.valid = true;
+                    formRssCopy.genID += 1;
+                    formRssCopy.feeds.push({id, title, descr, url});
+                    formRssCopy.posts = [...formRssCopy.posts, ...posts];
+    
+                    // STATE UPDATE
+                    state.formRss = formRssCopy;
+                }
+    
             })
             .catch(err => {
 
@@ -83,7 +94,12 @@ export default (state, i18nInstance) => {
                     rssFormState.errors = [i18nInstance.t(err.message)];
                 } else if (err.message === "network_fail") {
                     rssFormState.errors = [i18nInstance.t(err.message)];
+                } else if (err.message === "rss_fail") {
+                    rssFormState.errors = [i18nInstance.t(err.message)];
+                } else if (err.message === 'Failed to fetch') {
+                    rssFormState.errors = [i18nInstance.t('ERR_NAME_NOT_RESOLVED')];
                 } else {
+                    console.log(err);
                     const messages = err.errors.map((err) => i18nInstance.t(err.key));
                     rssFormState.errors = [...messages];
                 }

@@ -8,5 +8,7 @@ export default {
         errUrl: 'value must be a valid URL',
         hasStateFid: 'hasStateFid & something else...',
         network_fail: 'Network response was not ok.',
+        rss_fail: 'Ресурс не содержит валидный RSS',
+        ERR_NAME_NOT_RESOLVED: 'Нет сети',
     },
   };

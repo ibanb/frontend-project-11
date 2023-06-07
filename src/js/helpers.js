@@ -1,8 +1,8 @@
 
 const getFeedContent = (html, id) => {
 
-    const title = html.querySelector('channel > title');
-    const descr = html.querySelector('channel > description');
+    const title = html.querySelector('channel > title').textContent;
+    const descr = html.querySelector('channel > description').textContent;
     const posts = [...html.querySelectorAll('item')]
         .map(post => {
             const postID = id;

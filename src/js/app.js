@@ -27,7 +27,7 @@ export default () => {
             formRss: {
                 valid: false,
                 posts: [],
-                fids: [],
+                feeds: [],
                 errors: [],
                 genID: 1,
             }
