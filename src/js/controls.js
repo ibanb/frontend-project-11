@@ -1,5 +1,6 @@
 import { object, string, number, date, setLocale} from 'yup';
 import _ from 'lodash';
+import axios from 'axios';
 
 setLocale({
 
@@ -38,6 +39,15 @@ export default (state, i18nInstance) => {
         
         schema.validate(forCheck)
             .then(result => {
+
+                // axios.get('https://lorem-rss.hexlet.app/feed?unit=second')
+                //     .then((result) => {
+                //         const parser = new DOMParser();
+                //         const rss = parser.parseFromString(result.data, 'text/html');
+                //         console.log(rss);
+                //     });
+
+
                 const {value: fid} = result;
                 const rssFormState = _.cloneDeep(state.formRss);
                 const hasStateFid = rssFormState.fids.includes(fid) ? true : false;
@@ -48,9 +58,21 @@ export default (state, i18nInstance) => {
                     rssFormState.valid = true;
 
                     state.formRss = rssFormState;
+                    return fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=https://lorem-rss.hexlet.app/feed?unit=second`);
                 } else {
                     throw new Error('hasStateFid');
                 }
+            })
+            .then(response => {
+                if (response.ok) return response.json()
+                throw new Error('Network_fail')
+            })
+            .then(data => {
+            
+                const parser = new window.DOMParser();
+                const rss = parser.parseFromString(result.data, 'text/html');
+                console.log(rss);
+                    
             })
             .catch(err => {
 
@@ -59,11 +81,13 @@ export default (state, i18nInstance) => {
 
                 if (err.message === "hasStateFid") {
                     rssFormState.errors = [i18nInstance.t(err.message)];
+                } else if (err.message === "network_fail") {
+                    rssFormState.errors = [i18nInstance.t(err.message)];
                 } else {
                     const messages = err.errors.map((err) => i18nInstance.t(err.key));
                     rssFormState.errors = [...messages];
                 }
-                
+
                 state.formRss = rssFormState;
             });
 

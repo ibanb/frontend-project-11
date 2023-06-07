@@ -16,15 +16,21 @@ export default () => {
       },
     ).then(() => {
         
+        // set lang to interface
+        window.document.querySelector('.display-3').textContent = i18nInstance.t('name');
+        window.document.querySelector('p[class="lead"]').textContent = i18nInstance.t('lead');
+        window.document.querySelector('label[for="url-input"]').textContent = i18nInstance.t('label');
+        window.document.querySelector('.text-muted').textContent = i18nInstance.t('example');
+        window.document.querySelector('button[type="submit"]').textContent = i18nInstance.t('add');
         // create proxy state
-    const state = onChange({
-        formRss: {
-            valid: false,
-            posts: [],
-            fids: [],
-            errors: [],
-        }
-    }, () => {render(state, i18nInstance)});
+        const state = onChange({
+            formRss: {
+                valid: false,
+                posts: [],
+                fids: [],
+                errors: [],
+            }
+        }, () => {render(state, i18nInstance)});
 
     // add ALL events
     setControls(state, i18nInstance);

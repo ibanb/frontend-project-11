@@ -7,5 +7,6 @@ export default {
         example: 'Пример: https://ru.hexlet.io/lessons.rss',
         errUrl: 'value must be a valid URL',
         hasStateFid: 'hasStateFid & something else...',
+        network_fail: 'Network response was not ok.',
     },
   };
