@@ -30,6 +30,7 @@ export default () => {
                 feeds: [],
                 errors: [],
                 genID: 1,
+                timer: null,
             }
         }, () => {render(state, i18nInstance)});
 

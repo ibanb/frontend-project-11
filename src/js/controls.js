@@ -1,6 +1,8 @@
 import { object, string, number, date, setLocale} from 'yup';
 import _ from 'lodash';
 import { getFeedContent } from './helpers.js';
+import updateFeeds from './updateFeeds.js';
+
 
 setLocale({
 
@@ -71,7 +73,9 @@ export default (state, i18nInstance) => {
                     formRssCopy.genID += 1;
                     formRssCopy.feeds.push({id, title, descr, url});
                     formRssCopy.posts = [...formRssCopy.posts, ...posts];
-    
+                    if (formRssCopy.timer === null) {
+                        formRssCopy.timer = setTimeout(updateFeeds, 5000, state);
+                    }
                     // STATE UPDATE
                     state.formRss = formRssCopy;
                 }
