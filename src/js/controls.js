@@ -54,25 +54,17 @@ export default (state, i18nInstance) => {
                 throw new Error('network_fail')
             })
             .then(data => {
-                // console.log(data);
-
                 // preparing data to update state
                 const url = data.status.url;
                 const parser = new window.DOMParser();
                 const html = parser.parseFromString(data.contents, 'text/html');
-                console.log(html);
-                console.log('-----');
-                console.log(html.querySelector('rss'));
-
-
+                // check rigth RSS
                 if (!html.querySelector('rss')) {
                     throw new Error('rss_fail')
                 } else {
                     const formRssCopy = _.cloneDeep(state.formRss);
                     const id = formRssCopy.genID + 1;
-                    // in future make CHECKING function for RIGTH getFeedsContent
                     const {title, descr, posts} = getFeedContent(html, id);
-                    
                     // create copy prop for state update
                     formRssCopy.errors = [];
                     formRssCopy.valid = true;
@@ -103,7 +95,8 @@ export default (state, i18nInstance) => {
                     const messages = err.errors.map((err) => i18nInstance.t(err.key));
                     rssFormState.errors = [...messages];
                 }
-
+                
+                // STATE UPDATE 
                 state.formRss = rssFormState;
             });
 
