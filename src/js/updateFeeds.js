@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getFeedContent, getID } from './helpers.js';
+import { getFeedContent, getID, comparePosts } from './helpers.js';
 
 export default function updateFeeds(state) {
 
@@ -38,7 +38,10 @@ export default function updateFeeds(state) {
                     newPosts = [...newPosts, ...postList];
                 })
 
-            state.formRss.posts = newPosts;
+            // TASK COMPARE OLD & NEW POSTS
+            const updatedPosts = comparePosts(newPosts, state.formRss.posts);
+
+            state.formRss.posts = updatedPosts;
             setTimeout(updateFeeds, 5000, state);
 
 

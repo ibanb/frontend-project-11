@@ -9,8 +9,9 @@ const getFeedContent = (html, id) => {
             const title = post.querySelector('title').textContent;
             const descr = post.querySelector('description').textContent;
             const link = post.querySelector('link').nextSibling.textContent;
+            const used = false;
 
-            return {postID, title, descr, link};
+            return {postID, title, descr, link, used};
         });
 
     return { 
@@ -62,5 +63,18 @@ const getID = (state, key) => {
   return findNeedFeed[0].id;
 }
 
+const comparePosts = (newPosts, oldPosts) => {
 
-export { getFeedContent, createFeedsList, createPostsList, getID };
+  const oldPostsTitles = oldPosts.map(oldpost => oldpost.title);
+  const diff = newPosts.filter(post => oldPostsTitles.includes(post.title) === false);
+  if (diff) {
+    return [...oldPosts, ...diff];
+  }
+  return oldPosts;
+
+  // нужно выделить те которых нет в oldPosts
+
+}
+
+
+export { getFeedContent, createFeedsList, createPostsList, getID, comparePosts };
