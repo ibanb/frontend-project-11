@@ -9,6 +9,6 @@
 
 // setTimeout(recursiveFn, 5000);
 
-const state = 1;
+// const state = 1;
 
-setTimeout(console.log, 2000, state);
+// setTimeout(console.log, 2000, state);

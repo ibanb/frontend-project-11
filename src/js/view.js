@@ -27,7 +27,8 @@ export default function render(state, i18nInstance) {
         errorBox.classList.remove('text-danger');
         errorBox.classList.add('text-success');
         feedsContainer.innerHTML = contentForFeedsContainer;
-        postsContainer.innerHTML = contentForPostsContainer;
+        postsContainer.innerHTML = '';
+        postsContainer.append(contentForPostsContainer);
         form.reset()
     }
 }

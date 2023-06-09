@@ -65,13 +65,15 @@ export default (state, i18nInstance) => {
                     throw new Error('rss_fail')
                 } else {
                     const formRssCopy = _.cloneDeep(state.formRss);
-                    const id = formRssCopy.genID + 1;
-                    const {title, descr, posts} = getFeedContent(html, id);
+                    const feedID = formRssCopy.genID + 1;
+                    const postID = formRssCopy.genPostID;
+                    const {title, descr, posts, newPostID} = getFeedContent(html, feedID, postID);
                     // create copy prop for state update
                     formRssCopy.errors = [];
                     formRssCopy.valid = true;
                     formRssCopy.genID += 1;
-                    formRssCopy.feeds.push({id, title, descr, url});
+                    formRssCopy.genPostID = newPostID;
+                    formRssCopy.feeds.push({id: feedID, title, descr, url});
                     formRssCopy.posts = [...formRssCopy.posts, ...posts];
                     if (formRssCopy.timer === null) {
                         formRssCopy.timer = setTimeout(updateFeeds, 5000, state);
