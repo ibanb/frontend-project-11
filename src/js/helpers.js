@@ -7,9 +7,7 @@ const getFeedContent = (html, feedID, postID) => {
         .map(post => {
 
             const id = postID;
-            console.log(`id = ${id}`)
             postID += 1;
-            console.log(`postID = ${postID}`);
             const title = post.querySelector('title').textContent;
             const descr = post.querySelector('description').textContent;
             const link = post.querySelector('link').nextSibling.textContent;
@@ -26,25 +24,35 @@ const getFeedContent = (html, feedID, postID) => {
     };
 };
 
-function showModal (title, descr, link) {
+function showModal (event, state, title, descr, link, id) {
 
-  // const modal = window.document.querySelector('#modal');
-  // const header = modal.querySelector('.modal-title');
-  // const body = modal.querySelector('.modal-body');
-  // const href = modal.querySelector('.modal-footer > a');
-  // const namePostLink = event.closest('li > a');
-  // namePostLink.classList.remove('fw-bold');
-  // namePostLink.classList.add('fw-normal');
+  const modal = window.document.querySelector('#modal');
+  const header = modal.querySelector('.modal-title');
+  const body = modal.querySelector('.modal-body');
+  const href = modal.querySelector('.modal-footer > a');
 
-  console.log('I am in showmodal')
-  // console.log(`title - ${title}`);
-  // console.log(`descr - ${descr}`);
-  // console.log(`link - ${link}`);
-  // console.log(`event - ${event.target}`);
+  header.textContent = title;
+  body.textContent = descr;
+  href.setAttribute('href', link);
 
-  // header.textContent = title;
-  // body.textContent = descr;
-  // href.setAttribute('href', link);
+  // console.log('before cloneDeep');
+  // console.log(JSON.stringify(state, ' ', 2));
+
+  const copyFormRss = _.cloneDeep(state.formRss);
+  // console.log('copy of formRss');
+  // console.log(JSON.stringify(copyFormRss, ' ', 2));
+  const { posts: copyPosts } = copyFormRss;
+  // console.log(copyPosts);
+  const newPosts = copyPosts.map(post => {
+    if (post.id === id) {
+      return {...post, used: true};
+    } else {
+      return post;
+    }
+  });
+  // console.log('after cloneDeep');
+  // console.log(JSON.stringify(state.formRss, ' ', 2));
+  state.formRss.posts = newPosts;
 
 } 
 
@@ -66,8 +74,10 @@ const createFeedsList = (feeds) => {
     `;
 };
 
-const createPostsList = (posts) => {
+const createPostsList = (state, posts) => {
 
+    // console.log('state in createPostsList');
+    // console.log(JSON.stringify(state, ' ', 2));
     const cardBorder = window.document.createElement('div');
     cardBorder.classList.add('card', 'border-0');
     const cardBody = window.document.createElement('div');
@@ -88,7 +98,7 @@ const createPostsList = (posts) => {
       
       // a link
       const a = window.document.createElement('a');
-      a.classList.add('fw-bold');
+      a.classList.add(`${post.used === true ? 'fw-normal' : 'fw-bold'}`);
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
       a.setAttribute('href', post.link);
@@ -103,8 +113,10 @@ const createPostsList = (posts) => {
       button.dataset.feedID = post.id;
       button.dataset.bsToggle = 'modal';
       button.dataset.bsTarget = '#modal';
-      button.value = 'Просмотр';
-      button.addEventListener('click', () => console.log('test!!!'));
+      button.textContent = 'Просмотр';
+      // console.log('state in map');
+      // console.log(JSON.stringify(state, ' ', 2));
+      button.addEventListener('click', (event) => showModal(event, state, post.title, post.descr, post.link, post.id));
       li.append(button);
 
       ul.append(li);

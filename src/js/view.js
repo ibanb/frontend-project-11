@@ -11,7 +11,7 @@ export default function render(state, i18nInstance) {
     const error = state.formRss.errors[0];
     const {feeds, posts, timer} = state.formRss;
     const contentForFeedsContainer = createFeedsList(feeds);
-    const contentForPostsContainer = createPostsList(posts);
+    const contentForPostsContainer = createPostsList(state, posts);
 
     // toggle border (show error message box )
     if (!state.formRss.valid) {
