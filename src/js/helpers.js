@@ -74,7 +74,7 @@ const createFeedsList = (feeds) => {
     `;
 };
 
-const createPostsList = (state, posts) => {
+const createPostsList = (state, posts, i18nInstance) => {
 
     // console.log('state in createPostsList');
     // console.log(JSON.stringify(state, ' ', 2));
@@ -113,7 +113,7 @@ const createPostsList = (state, posts) => {
       button.dataset.feedID = post.id;
       button.dataset.bsToggle = 'modal';
       button.dataset.bsTarget = '#modal';
-      button.textContent = 'Просмотр';
+      button.textContent = i18nInstance.t('view');
       // console.log('state in map');
       // console.log(JSON.stringify(state, ' ', 2));
       button.addEventListener('click', (event) => showModal(event, state, post.title, post.descr, post.link, post.id));

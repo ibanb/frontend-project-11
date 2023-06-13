@@ -11,5 +11,8 @@ export default {
         rss_fail: 'Ресурс не содержит валидный RSS',
         ERR_NAME_NOT_RESOLVED: 'Ошибка сети',
         done: 'RSS успешно загружен',
+        view: 'Просмотр',
+        empty: 'Не должно быть пустым',
+
     },
   };

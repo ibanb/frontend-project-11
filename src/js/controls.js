@@ -13,6 +13,7 @@ setLocale({
     // use functions to generate an error object that includes the value from the schema
     string: {
       url: ({ url }) => ({ key: 'errUrl', values: { url } }),
+      string: ({ string }) => ({ key: 'empty', values: { string }}),
     },
 });
 
@@ -21,6 +22,8 @@ const schema = object({
 });
 
 export default (state, i18nInstance) => {
+
+    let feed;
 
     window.document.querySelector('.display-3').textContent = i18nInstance.t('name');
     window.document.querySelector('p[class="lead"]').textContent = i18nInstance.t('lead');
@@ -39,7 +42,8 @@ export default (state, i18nInstance) => {
         schema.validate(forCheck)
             .then(result => {
 
-                const {value: feed} = result;
+                const {value} = result;
+                feed = value;
                 const feeds = state.formRss.feeds;
                 // function check includes bu value
                 if (feeds.length === 0 || !feeds.map(feed => feed.url).includes(feed)) {
@@ -73,7 +77,7 @@ export default (state, i18nInstance) => {
                     formRssCopy.valid = true;
                     formRssCopy.genID += 1;
                     formRssCopy.genPostID = newPostID;
-                    formRssCopy.feeds.push({id: feedID, title, descr, url});
+                    formRssCopy.feeds.push({id: feedID, title, descr, url: feed});
                     formRssCopy.posts = [...formRssCopy.posts, ...posts];
                     if (formRssCopy.timer === null) {
                         formRssCopy.timer = setTimeout(updateFeeds, 5000, state);
