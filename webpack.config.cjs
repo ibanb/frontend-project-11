@@ -3,7 +3,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: './src/js/main.js',
   output: {
     filename: 'main.js',
