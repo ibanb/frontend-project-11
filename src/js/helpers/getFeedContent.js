@@ -1,4 +1,4 @@
-export default function getFeedContent(html, feedID, postID) {
+export default function getFeedContent(html, postID) {
     
     const title = html.querySelector('channel > title').textContent;
     const descr = html.querySelector('channel > description').textContent;
@@ -12,7 +12,7 @@ export default function getFeedContent(html, feedID, postID) {
             const link = post.querySelector('link').nextSibling.textContent;
             const used = false;
 
-            return {feedID, id, title, descr, link, used};
+            return {id, title, descr, link, used};
         });
 
     return { 

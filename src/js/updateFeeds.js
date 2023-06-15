@@ -40,9 +40,9 @@ export default function updateFeeds(state) {
 
                     const parser = new window.DOMParser();
                     const html = parser.parseFromString(feed.contents, 'text/html');
-                    const url = feed.status.url;
-                    const id = getFeedID(state, url);
-                    const {posts} = getFeedContent(html, id, newPostID);
+                    // const url = feed.status.url;
+                    // const id = getFeedID(state, url);
+                    const {posts} = getFeedContent(html, newPostID);
                     newPostID += 1;
                     return posts;
                 })
