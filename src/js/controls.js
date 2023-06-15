@@ -71,7 +71,7 @@ export default (state, i18nInstance) => {
                     const formRssCopy = _.cloneDeep(state.formRss);
                     const feedID = formRssCopy.genID + 1;
                     const postID = formRssCopy.genPostID;
-                    const {title, descr, posts, newPostID} = getFeedContent(html, feedID, postID);
+                    const {title, descr, posts, newPostID} = getFeedContent(html, postID);
                     // create copy prop for state update
                     formRssCopy.errors = [];
                     formRssCopy.valid = true;
@@ -101,6 +101,10 @@ export default (state, i18nInstance) => {
                 } else if (err.message === 'Failed to fetch') {
                     rssFormState.errors = [i18nInstance.t('ERR_NAME_NOT_RESOLVED')];
                 } else {
+
+                    // SEE HERE
+                    // USE CONSOLE
+                    // TRY MEN
                     console.log(err);
                     const messages = err.errors.map((err) => i18nInstance.t(err.key));
                     rssFormState.errors = [...messages];
