@@ -9,7 +9,7 @@ export default function render(state, i18nInstance) {
     const form = window.document.querySelector('form');
     const errorBox = document.querySelector('.feedback');
     const error = state.formRss.errors[0];
-    const {feeds, posts, timer} = state.formRss;
+    const {feeds, posts} = state.formRss;
     const contentForFeedsContainer = createFeedsList(feeds);
     const contentForPostsContainer = createPostsList(state, posts, i18nInstance);
 

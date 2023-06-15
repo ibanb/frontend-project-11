@@ -7,14 +7,16 @@ export default function updateFeeds(state) {
     // get promises by fetch
     const promises = feeds.map(feed => {
         return fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=${feed.url}`)
-        .then(response => {
-            if (response.ok) {
-                return response.json()
-            }
-            throw new Error('network_fail')
-        })
-        .then(data => data)
-        .catch(err => err.message);
+            .then(response => {
+                if (response.ok) {
+                    console.log('-----------')
+                    console.log(response.status);
+                    return response.json()
+                }
+                throw new Error('network_fail')
+            })
+            .then(data => data)
+            .catch(err => err.message);
 
     })
 
@@ -26,8 +28,14 @@ export default function updateFeeds(state) {
             let newPostID = 1;
             // filter only accessible feeds
             let newPosts = [];
+            console.log(coll);
             const newFeedsColl = coll
                 .filter(feed => feed !== "Failed to fetch")
+                .filter(feed => {
+                    const parser = new window.DOMParser();
+                    const html = parser.parseFromString(feed.contents, 'text/html');
+                    html.querySelector('rss') ? true : false;
+                })
                 .map(feed => {
 
                     const parser = new window.DOMParser();
