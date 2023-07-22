@@ -48,3 +48,5 @@ fetch(`https://allorigins.hexlet.app/get?disableCache=true&url=https://ru.hexlet
         console.log(descr);
         console.log(posts);
     });
+
+    // some other
